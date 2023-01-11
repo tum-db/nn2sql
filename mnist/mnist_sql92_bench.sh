@@ -37,7 +37,7 @@ for limit in $limits; do
 iter=$((6000/limit))
     for atts in $attss; do
 echo "
-\record gd_mnist.csv Umbra: SQL-92,$atts,$limit,$lr,$iter,$parallel
+\record gd_mnist.csv Umbra_SQL-92,$atts,$limit,$lr,$iter,$parallel
 with recursive w (iter,id,i,j,v) as (
   (select 0,0,i,j,v from w_xh where w_id=$atts union select 0,1,i,j,v from w_ho where w_id=$atts)
   union all
