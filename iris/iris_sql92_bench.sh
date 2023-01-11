@@ -55,7 +55,7 @@ for limit in $limits; do
     for atts in $attss; do
 
 echo "
-\record gd_nn.csv Umbra: SQL + Arrays,$atts,$limit,$lr,$iter,$parallel
+\record gd_nn.csv Umbra_SQLArrays,$atts,$limit,$lr,$iter,$parallel
 with recursive gd (id,w_xh,w_ho) as (
  select 0, wxh, who from weights where wid=$atts
 union all
@@ -83,7 +83,7 @@ union all
 select * from gd order by id;
 
 
-\record gd_nn.csv Umbra: SQL-92,$atts,$limit,$lr,$iter,$parallel
+\record gd_nn.csv Umbra_SQL-92,$atts,$limit,$lr,$iter,$parallel
 with recursive w (iter,id,i,j,v) as (
   (select 0,0,i,j,v from w_xh where w_id=$atts union select 0,1,i,j,v from w_ho where w_id=$atts)
   union all
