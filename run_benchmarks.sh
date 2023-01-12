@@ -9,8 +9,8 @@ UMBRASQL=../umbra/bin/sql
 
 # run Umbra
 (cd iris && ./iris_sql92_bench.sh | $UMBRASQL)
-(cd mnist && ./mnist_sql92_bench.sh | $UMBRASQL)
 (cd mnist && $UMBRASQL < mnist_bench.sql)
+(cd mnist && ./mnist_sql92_bench.sh | $UMBRASQL)
 
 # PSQL (takes time)
 (cd iris && ./iris_sql92_psql_bench.sh | psql)
