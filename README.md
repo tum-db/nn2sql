@@ -5,6 +5,7 @@
     $ pip3 install numpy
     $ tar -xf umbra.tar.xz
     $ cd mnist && tar -xzf mnist_train.csv.tgz
+    $ echo "create or replace function sig(x float) returns float as 'select 1::float/(1+exp(-x))' LANGUAGE 'sql';" | psql
 
 ## Scaling the Number of Input Tuples
     $ cd iris
