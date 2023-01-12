@@ -14,7 +14,7 @@ insert into weights2 (select 200, (select array_agg(array_agg) from generate_ser
     (select array_agg(array_agg) from generate_series(1,200),(select array_agg(random()) from generate_series(1,10))));
 
 --name,atts,limit,lr,iter,threads
-\record gd_mnist.csv Umbra_SQLArrays,20,2000,0.2,3,20
+\record gd_mnist.csv Umbra-SQLArrays,20,2000,0.2,3,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=20
 union all
@@ -44,7 +44,7 @@ group by id, w_ho, w_xh
 select max(count*1.0/(select sum(count) from test t2 where t1.id=t2.id )) from test t1 where correct=true;
 
 --name,atts,limit,lr,iter,threads
-\record gd_mnist.csv Umbra_SQLArrays,20,200,0.2,30,20
+\record gd_mnist.csv Umbra-SQLArrays,20,200,0.2,30,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=20
 union all
@@ -74,7 +74,7 @@ group by id, w_ho, w_xh
 select max(count*1.0/(select sum(count) from test t2 where t1.id=t2.id )) from test t1 where correct=true;
 
 --name,atts,limit,lr,iter,threads
-\record gd_mnist.csv Umbra_SQLArrays,20,20,0.2,300,20
+\record gd_mnist.csv Umbra-SQLArrays,20,20,0.2,300,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=20
 union all
@@ -105,7 +105,7 @@ select max(count*1.0/(select sum(count) from test t2 where t1.id=t2.id )) from t
 
 
 --name,atts,limit,lr,iter,threads
-\record gd_mnist.csv Umbra_SQLArrays,20,2,0.2,3000,20
+\record gd_mnist.csv Umbra-SQLArrays,20,2,0.2,3000,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=20
 union all
@@ -139,7 +139,7 @@ select max(count*1.0/(select sum(count) from test t2 where t1.id=t2.id )) from t
 ----------------------------------------------------------------
 --name,atts,limit,lr,iter,threads
 
-\record gd_mnist.csv Umbra_SQLArrays,200,2000,0.2,3,20
+\record gd_mnist.csv Umbra-SQLArrays,200,2000,0.2,3,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=200
 union all
@@ -169,7 +169,7 @@ group by id, w_ho, w_xh
 select max(count*1.0/(select sum(count) from test t2 where t1.id=t2.id )) from test t1 where correct=true;
 
 --name,atts,limit,lr,iter,threads
-\record gd_mnist.csv Umbra_SQLArrays,200,200,0.2,30,20
+\record gd_mnist.csv Umbra-SQLArrays,200,200,0.2,30,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=200
 union all
@@ -199,7 +199,7 @@ group by id, w_ho, w_xh
 select max(count*1.0/(select sum(count) from test t2 where t1.id=t2.id )) from test t1 where correct=true;
 
 --name,atts,limit,lr,iter,threads
-\record gd_mnist.csv Umbra_SQLArrays,200,20,0.2,300,20
+\record gd_mnist.csv Umbra-SQLArrays,200,20,0.2,300,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=200
 union all
@@ -230,7 +230,7 @@ select max(count*1.0/(select sum(count) from test t2 where t1.id=t2.id )) from t
 
 
 --name,atts,limit,lr,iter,threads
-\record gd_mnist.csv Umbra_SQLArrays,200,2,0.2,3000,20
+\record gd_mnist.csv Umbra-SQLArrays,200,2,0.2,3000,20
 with recursive gd (id,w_xh,w_ho) as (
 select 0,w_xh,w_ho from weights2 where wid=200
 union all
