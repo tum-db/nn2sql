@@ -1,9 +1,8 @@
-library(data.table)
-library(magrittr)
-library(tidyr)
-library(ggplot2)
-library(tikzDevice)
-library("scales")
+if(!require(data.table)) { install.packages("data.table"); library(data.table) }
+if(!require(magrittr)) { install.packages("magrittr"); library(magrittr) }
+if(!require(tidyr)) { install.packages("tidyr"); library(tidyr) }
+if(!require(ggplot2)) { install.packages("ggplot2"); library(ggplot2) }
+if(!require("scales")) { install.packages("scales"); library("scales") }
 theme_set(theme_bw())
 
 umbramnist = as.data.table(read.csv(file="gd_mnist.csv",header=TRUE,sep = ","))[name!="Operator"]
