@@ -4,7 +4,7 @@ export LD_LIBRARY_PATH=../umbra/lib/
 UMBRASQL=../umbra/bin/sql
 export MNISTATTSS="20"
 #export MNISTATTSS="20 200"
-export MNISTLIMITS="20 200 2000"
+export MNISTLIMITS="200 2000"
 #export MNISTLIMITS="2 20 200 2000"
 
 rm -f iris/gd_nn.csv
