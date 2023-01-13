@@ -23,5 +23,5 @@ echo "create or replace function sig(x float) returns float as 'select 1::float/
 sed -i 's/execution_time_min,/execution_time,/' mnist/gd_mnist.csv iris/gd_nn.csv
 sed -i 's/name,/name,atts,limit,lr,iter,threads,/' mnist/gd_mnist.csv iris/gd_nn.csv
 
-(cd iris && Rscript iris.r)
-(cd mnist && Rscript mnist.r)
+(cd iris && Rscript iris.r && cp iris.pdf /figures)
+(cd mnist && Rscript mnist.r && cp mnist.pdf /figures)
