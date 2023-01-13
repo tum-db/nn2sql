@@ -14,9 +14,10 @@
 
 ## Reproduce also long-running SQL-92 queries in Umbra
 (un)comment in run_benchmarks.sh:
+
     #export MNISTATTSS="20"
     export MNISTATTSS="20 200"
-    #export MNISTLIMITS="20 200 2000"
+    #export MNISTLIMITS="200 2000"
     export MNISTLIMITS="2 20 200 2000"
 
 ## Slowstart
@@ -29,13 +30,13 @@
 ### Scaling the Number of Input Tuples
     $ cd iris
     $ python3 iris_bench.py > numpy_nn.csv
-    $ ./iris_sql92_bench.sh | <path/to/umbra/build/sql>
+    $ ./iris_sql92_bench.sh | ../umbra/bin/sql
     $ ./iris_sql92_psql_bench.sh | psql
     $ Rscript iris.r
 
 ### Image Classification
     $ cd mnist
     $ python3 mnist_bench.py > numpy_mnist.csv
-    $ ./mnist_sql92_bench.sh | <path/to/umbra/build/sql>
-    $ <path/to/umbra/build/sql> < mnist_bench.sql
+    $ ./mnist_sql92_bench.sh | ../umbra/bin/sql
+    $ ../umbra/bin/sql < mnist_bench.sql
     $ Rscript mnist.r
