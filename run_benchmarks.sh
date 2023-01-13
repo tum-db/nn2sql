@@ -2,6 +2,10 @@
 
 export LD_LIBRARY_PATH=../umbra/lib/
 UMBRASQL=../umbra/bin/sql
+export MNISTATTSS="20"
+#export MNISTATTSS="20 200"
+export MNISTLIMITS="20 200 2000"
+#export MNISTLIMITS="2 20 200 2000"
 
 rm -f iris/gd_nn.csv
 rm -f mnist/gd_mnist.csv
@@ -17,7 +21,7 @@ rm -f mnist/gd_mnist.csv
 
 # PSQL (takes time)
 echo "create or replace function sig(x float) returns float as 'select 1::float/(1+exp(-x))' LANGUAGE 'sql';" | psql
-(cd iris && ./iris_sql92_psql_bench.sh | psql)
+(cd iris && ./iris_sql92_psql_bench.sh | psql | grep Time > psql_nn.csv)
 
 # create plots
 sed -i 's/execution_time_min,/execution_time,/' mnist/gd_mnist.csv iris/gd_nn.csv
