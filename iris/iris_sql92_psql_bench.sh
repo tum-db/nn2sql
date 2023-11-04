@@ -59,12 +59,12 @@ with recursive w (iter,id,i,j,v) as (
   with w_now as (
      SELECT * from w
   ), a_xh(i,j,v) as (
-     SELECT m.i, n.j, sig(SUM (m.v*n.v)) --1/(1+exp(-SUM (m.v*n.v)))
+     SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v)))
      FROM img AS m INNER JOIN w_now AS n ON m.j=n.i
      WHERE m.i < $limit and n.id=0 and n.iter=(select max(iter) from w_now) -- w_xh
      GROUP BY m.i, n.j
   ), a_ho(i,j,v) as (
-     SELECT m.i, n.j, sig(SUM (m.v*n.v)) --1/(1+exp(-SUM (m.v*n.v))) --sig(SUM (m.v*n.v))
+     SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v))) --sig(SUM (m.v*n.v))
      FROM a_xh AS m INNER JOIN w_now AS n ON m.j=n.i
      WHERE n.id=1 and n.iter=(select max(iter) from w_now)  -- w_ho
      GROUP BY m.i, n.j
