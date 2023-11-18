@@ -13,13 +13,13 @@ create table mnist2 (id int, label float, pixel1 float, pixel2 float, pixel3 flo
 create table if not exists img (i int, j int, v float);
 create table if not exists one_hot(i int, j int, v int, dummy int);
 copy mnist from './mnist_train.csv' delimiter ',';
-insert into mnist2 (select row_number() over (), * from mnist limit 1000);
+insert into mnist2 (select row_number() over (), * from (select * from mnist limit 6000));
 "
 for i in `seq 1 784`; do
 echo "insert into img (select id,$i,pixel$i/255 from mnist2);"
 done
 echo "
-insert into one_hot(select n.i, n.j, coalesce(i.v,0), i.v from (select id,label+1 as label,1 as v from mnist2) i right outer join (select a.a as i, b.b as j from (select generate_series as a from generate_series(1,60000)) a, (select generate_series as b from generate_series(1,10)) b) n on n.i=i.id and n.j=i.label order by i,j);
+insert into one_hot(select n.i, n.j, coalesce(i.v,0), i.v from (select id,label+1 as label,1 as v from mnist2) i right outer join (select a.a as i, b.b as j from (select generate_series as a from generate_series(1,6000)) a, (select generate_series as b from generate_series(1,10)) b) n on n.i=i.id and n.j=i.label order by i,j);
 
 create table if not exists w_xh (w_id int, i int, j int, v float);
 create table if not exists w_ho (w_id int, i int, j int, v float);
