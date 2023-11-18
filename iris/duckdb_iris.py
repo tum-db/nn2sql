@@ -124,10 +124,9 @@ def benchmark(atts,limit,iterations,learning_rate):
 		result = duckdb.sql(train.format(limit,limit,learning_rate,iterations) + labelmax).fetchall()
 	time=(datetime.now() - start).total_seconds()/rep
 	#name,atts,limit,lr,iter,execution_time,accuracy
-	print("iris,{},{},{},{},{},{}".format(atts,limit,learning_rate,iterations,time,result[0][0]))
+	print("DuckDB-SQL-92,{},{},{},{},{},{}".format(atts,limit,learning_rate,iterations,time,result[0][0]))
 
-
-
+print("name,atts,limit,lr,iter,execution_time,accuracy")
 for atts in attss:
 	for iterations in itss:
 		for size in sizes:

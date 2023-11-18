@@ -5,8 +5,8 @@ from duckdb.typing import *
 
 rep=1
 limit=6000
-sizes=[2,20]
-attss=[20,200]
+sizes=[2000,200,20,2]
+attss=[20]
 learningrate=0.01
 
 createschema = '''
@@ -116,11 +116,11 @@ def benchmark(atts,limit,iterations,learning_rate):
 	start = datetime.now()
 	for i in range(rep):
 		result = duckdb.sql(train.format(learning_rate,iterations) + labelmax).fetchall()
-		print(result)
 	time=(datetime.now() - start).total_seconds()/rep
 	#name,atts,limit,lr,iter,execution_time,accuracy
-	print("mnist,{},{},{},{},{},{}".format(atts,limit,learning_rate,iterations,time,result[0][0]))
+	print("DuckDB-SQL-92,{},{},{},{},{},{}".format(atts,limit,learning_rate,iterations,time,result[0][0]))
 
+print("name,atts,limit,lr,iter,execution_time,accuracy")
 for atts in attss:
 	for size in sizes:
 		iterations=int(60/size)
