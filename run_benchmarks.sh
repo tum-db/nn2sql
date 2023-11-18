@@ -19,6 +19,10 @@ rm -f mnist/gd_mnist.csv
 (cd mnist && $UMBRASQL < mnist_bench.sql)
 (cd mnist && ./mnist_sql92_bench.sh | $UMBRASQL)
 
+# run DuckDB baseline
+(cd iris && python3 duckdb_iris.py > duckdb_iris.csv)
+(cd mnist && python3 duckdb_mnist.py > duckdb_mnist.csv)
+
 # PSQL (takes time)
 echo "create or replace function sig(x float) returns float as 'select 1::float/(1+exp(-x))' LANGUAGE 'sql';" | psql
 (cd iris && ./iris_sql92_psql_bench.sh | psql | grep Time > psql_nn.csv)
