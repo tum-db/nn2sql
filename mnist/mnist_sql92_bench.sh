@@ -46,7 +46,7 @@ with recursive w (iter,id,i,j,v) as (
   ), a_xh(i,j,v) as (
      SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v)))
      FROM (select * from img) AS m INNER JOIN w_now AS n ON m.j=n.i
-     WHERE n.id=0 and n.iter=(select max(iter) from w_now) -- w_xh
+     WHERE m.i < $limit and n.id=0 and n.iter=(select max(iter) from w_now) -- w_xh
      GROUP BY m.i, n.j
   ), a_ho(i,j,v) as (
      SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v)))
@@ -70,6 +70,7 @@ with recursive w (iter,id,i,j,v) as (
   ), d_w(id,i,j,v) as (
      SELECT 0, m.j as i, n.j, (SUM (m.v*n.v))
      FROM (select * from img) AS m INNER JOIN d_xh AS n ON m.i=n.i
+     WHERE m.i < $limit
      GROUP BY m.j, n.j
      union
      SELECT 1, m.j as i, n.j, (SUM (m.v*n.v))
