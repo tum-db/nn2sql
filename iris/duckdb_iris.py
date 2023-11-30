@@ -4,7 +4,7 @@ from datetime import datetime
 from duckdb.typing import *
 
 rep=1
-sizes=[150,300,600]
+sizes=[150,300,600,1200]
 attss=[20,50]
 itss=[10,100,1000]
 learningrate=0.01
