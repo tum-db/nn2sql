@@ -42,8 +42,9 @@ for atts in $attss; do
 echo "
 insert into w_xh (select $atts, i.*,j.*,random()*2-1 from generate_series(1,4) i, generate_series(1,$atts) j);
 insert into w_ho (select $atts, i.*,j.*,random()*2-1 from generate_series(1,$atts) i, generate_series(1,3) j);
-insert into weights (select $atts, (select array_agg(array_agg) from generate_series(1,4),(select array_agg(random()) from generate_series(1,$atts))),
-    (select array_agg(array_agg) from generate_series(1,$atts),(select array_agg(random()) from generate_series(1,3))));
+insert into weights (select $atts, 
+    (select array_agg(ys) from ( select array_agg(v) as ys from (select i,j,v from w_xh where w_id = $atts) tmp group by i) tmp),
+    (select array_agg(ys) from ( select array_agg(v) as ys from ((select i,j,v from w_ho where w_id = $atts)) tmp group by i) tmp));
 "
 done
 
