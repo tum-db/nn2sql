@@ -3,7 +3,7 @@
 # parameters
 parallel=${PARALLEL:-"20"}
 lr=0.2 # learningrate
-attss=${MNISTATTSS:-"20 200 2000"}
+attss=${MNISTATTSS:-"10 20 50 100 200 500"}
 limit=6000
 
 echo "
@@ -33,21 +33,15 @@ done
 
 for atts in $attss; do
 echo "
+\o /dev/null
 \record inference_mnist.csv Umbra-SQL-92,$atts,$limit,$lr,$parallel
-SELECT count(*)::float/(select count(distinct i) from one_hot) as precision
+SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v))) as v
 FROM (
-   SELECT *, rank() over (partition by m.i order by v desc) as rank
-   FROM (
-      SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v))) as v
-      FROM (
-         SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v))) as v
-         FROM img AS m INNER JOIN w_xh AS n ON m.j=n.i
-         GROUP BY m.i, n.j) AS m INNER JOIN w_ho AS n ON m.j=n.i
-      GROUP BY m.i, n.j
-   ) m ) pred,
-   (SELECT *, rank() over (partition by m.i order by v desc) as rank FROM one_hot m) test
-WHERE pred.i=test.i and pred.rank = 1 and test.rank=1
-GROUP BY pred.j=test.j
-HAVING (pred.j=test.j)=true;
+   SELECT m.i, n.j, 1/(1+exp(-SUM (m.v*n.v))) as v
+   FROM img AS m INNER JOIN w_xh AS n ON m.j=n.i
+   WHERE n.w_id=$atts
+   GROUP BY m.i, n.j) AS m INNER JOIN w_ho AS n ON m.j=n.i
+WHERE n.w_id=$atts
+GROUP BY m.i, n.j;
 "
 done

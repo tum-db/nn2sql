@@ -6,17 +6,37 @@ pixel1, pixel2, pixel3, pixel4, pixel5, pixel6, pixel7, pixel8, pixel9, pixel10,
 ]]/255+0.001 as img, array[(array_fill(0::float,array[cast(label as int)]) || 1::float ) || array_fill(0::float,array[9-cast(label as int)])] as one_hot from mnist limit 6000);
 
 create table if not exists weights2 (wid int, w_xh float[], w_ho float[]);
+insert into weights2 (select 10, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,10) y) tmp group by x) tmp),
+    (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,10) x, generate_series(1,10) y) tmp group by x) tmp));
 insert into weights2 (select 20, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,20) y) tmp group by x) tmp),
     (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,20) x, generate_series(1,10) y) tmp group by x) tmp));
+insert into weights2 (select 50, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,50) y) tmp group by x) tmp),
+    (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,50) x, generate_series(1,10) y) tmp group by x) tmp));
+insert into weights2 (select 100, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,100) y) tmp group by x) tmp),
+    (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,100) x, generate_series(1,10) y) tmp group by x) tmp));
 insert into weights2 (select 200, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,200) y) tmp group by x) tmp),
     (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,200) x, generate_series(1,10) y) tmp group by x) tmp));
+insert into weights2 (select 500, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,500) y) tmp group by x) tmp),
+    (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,500) x, generate_series(1,10) y) tmp group by x) tmp));
+insert into weights2 (select 1000, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,1000) y) tmp group by x) tmp),
+    (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,1000) x, generate_series(1,10) y) tmp group by x) tmp));
 insert into weights2 (select 2000, (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,784) x, generate_series(1,2000) y) tmp group by x) tmp),
     (select array_agg(ys) from ( select array_agg(val) as ys from (select random()*2-1 as val,x.generate_series as x ,y.generate_series as y from generate_series(1,2000) x, generate_series(1,10) y) tmp group by x) tmp));
 \o/dev/null
 --name,atts,limit,lr,iter,threads
+\record inference_mnist.csv Umbra-SQLArrays,10,6000,0.2,20
+select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=10;
 \record inference_mnist.csv Umbra-SQLArrays,20,6000,0.2,20
 select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=20;
+\record inference_mnist.csv Umbra-SQLArrays,50,6000,0.2,50
+select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=50;
+\record inference_mnist.csv Umbra-SQLArrays,100,6000,0.2,20
+select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=100;
 \record inference_mnist.csv Umbra-SQLArrays,200,6000,0.2,20
 select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=200;
+\record inference_mnist.csv Umbra-SQLArrays,500,6000,0.2,50
+select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=500;
+\record inference_mnist.csv Umbra-SQLArrays,1000,6000,0.2,10
+select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=1000;
 \record inference_mnist.csv Umbra-SQLArrays,2000,6000,0.2,20
 select highestposition(sig(sig(img**w_xh)**w_ho))=highestposition(one_hot) as correct from iris3,weights2 where wid=2000;
